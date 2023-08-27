@@ -26,10 +26,11 @@ import com.midterm.securevpnproxy.base.compose.AppTheme
 import com.midterm.securevpnproxy.base.compose.LocalColors
 import com.midterm.securevpnproxy.base.compose.MediumTextSemiBold
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.tanify.library.dns.domain.model.server_list.ServerGroupType
 
 @Composable
 fun HomeSelectModeContent(
-    modeOptions: Map<String, String>,
+    serverGroupTypes: List<ServerGroupType>,
     modifier: Modifier = Modifier,
     viewModel: HomeSelectModeViewModel = viewModel(),
 ) {
@@ -40,15 +41,15 @@ fun HomeSelectModeContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.fillMaxWidth()
     ) {
-        modeOptions.forEach { (idType, text) ->
-            ItemSelectMode(contentText = text,
-                isSelected = viewState.currentGroupType?.id == idType, onItemSelected = {
+        serverGroupTypes.forEach {
+            ItemSelectMode(contentText = it.displayName,
+                isSelected = viewState.currentGroupType?.id == it.id, onItemSelected = {
                     viewModel.onEvent(
                         HomeSelectModeViewModel.ViewEvent.SwitchServerGroupType(
-                            idType
+                            it.id
                         )
                     )
-                })
+                }, onInfoClicked = {})
         }
     }
 }
@@ -59,6 +60,7 @@ fun ItemSelectMode(
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
     onItemSelected: () -> Unit,
+    onInfoClicked: () -> Unit,
     textColor: Color = LocalColors.current.neutral90,
 ) {
     Row(
@@ -70,14 +72,15 @@ fun ItemSelectMode(
                 border = ButtonDefaults.outlinedBorder,
                 shape = RoundedCornerShape(50.dp)
             )
-            .clickable {
-                onItemSelected()
-            }
     ) {
         ItemSelected(
             isSelected = isSelected,
             onItemClicked = onItemSelected,
-            modifier = Modifier.padding(start = 20.dp, top = 20.dp, bottom = 20.dp)
+            modifier = Modifier
+                .padding(start = 20.dp, top = 20.dp, bottom = 20.dp)
+                .clickable {
+                    onItemSelected()
+                }
         )
         Text(
             text = contentText,
@@ -93,7 +96,9 @@ fun ItemSelectMode(
         Image(
             painter = painterResource(id = R.drawable.ic_information),
             contentDescription = "Information",
-            modifier = Modifier.padding(start = 10.dp, end = 20.dp)
+            modifier = Modifier
+                .padding(start = 10.dp, end = 20.dp)
+                .clickable { onInfoClicked() }
         )
     }
 }
@@ -104,7 +109,7 @@ fun ItemSelected(
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
 ) {
-    val iconRes = if(isSelected) {
+    val iconRes = if (isSelected) {
         R.drawable.ic_mode_select
     } else {
         R.drawable.ic_mode_unselect
@@ -119,6 +124,6 @@ fun ItemSelected(
 @Composable
 fun PreviewItemSelectMode() {
     AppTheme {
-        ItemSelectMode(contentText = "Security filter", onItemSelected = { })
+        ItemSelectMode(contentText = "Security filter", onItemSelected = { }, onInfoClicked = {})
     }
 }
