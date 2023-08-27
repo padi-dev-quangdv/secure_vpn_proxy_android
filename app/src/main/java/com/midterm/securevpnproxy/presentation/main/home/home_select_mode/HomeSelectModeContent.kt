@@ -14,10 +14,14 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -43,13 +47,14 @@ fun HomeSelectModeContent(
     ) {
         serverGroupTypes.forEach {
             ItemSelectMode(contentText = it.displayName,
+                descriptionText = stringResource(id = it.desc),
                 isSelected = viewState.currentGroupType?.id == it.id, onItemSelected = {
                     viewModel.onEvent(
                         HomeSelectModeViewModel.ViewEvent.SwitchServerGroupType(
                             it.id
                         )
                     )
-                }, onInfoClicked = {})
+                })
         }
     }
 }
@@ -57,12 +62,15 @@ fun HomeSelectModeContent(
 @Composable
 fun ItemSelectMode(
     contentText: String,
+    descriptionText: String,
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
     onItemSelected: () -> Unit,
-    onInfoClicked: () -> Unit,
     textColor: Color = LocalColors.current.neutral90,
 ) {
+    var isShowDialog by remember {
+        mutableStateOf(false)
+    }
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
@@ -98,8 +106,11 @@ fun ItemSelectMode(
             contentDescription = "Information",
             modifier = Modifier
                 .padding(start = 10.dp, end = 20.dp)
-                .clickable { onInfoClicked() }
+                .clickable { isShowDialog = !isShowDialog }
         )
+        if(isShowDialog) {
+            DialogShowInfoMessage(title = contentText, description = descriptionText)
+        }
     }
 }
 
@@ -124,6 +135,6 @@ fun ItemSelected(
 @Composable
 fun PreviewItemSelectMode() {
     AppTheme {
-        ItemSelectMode(contentText = "Security filter", onItemSelected = { }, onInfoClicked = {})
+        ItemSelectMode(contentText = "Security filter", descriptionText = "Security filter", onItemSelected = { })
     }
 }
