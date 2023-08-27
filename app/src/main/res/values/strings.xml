@@ -127,6 +127,8 @@
     <string name="security_filter">Security filter</string>
     <string name="adult_filter">Adult filter</string>
     <string name="family_filter">Family filter</string>
+    <string name="select_mode">Select mode</string>
+
     <string name="got_it">Got it</string>
     <string name="back">Back</string>
     <string name="vpn_is_running">Block is running!</string>

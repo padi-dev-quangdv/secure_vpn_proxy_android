@@ -76,6 +76,8 @@ class HomeViewModel @Inject constructor(
     override fun onEvent(event: ViewEvent) {
         when (event) {
             is ViewEvent.OnOffToggle -> handleToggleOnOff()
+            is ViewEvent.SwitchHomeMode -> handleHomeMode(event.screenMode)
+
         }
     }
 
@@ -84,6 +86,10 @@ class HomeViewModel @Inject constructor(
         coroutineScope.launch {
             userDataStore.saveVpnTurned(newOnOffState)
         }
+    }
+
+    private fun handleHomeMode(screenMode: HomeChildScreen) {
+        setState(currentState.copy(currentScreen = screenMode))
     }
 
     override fun onCleared() {
@@ -101,6 +107,7 @@ class HomeViewModel @Inject constructor(
 
     sealed interface ViewEvent : BaseViewEvent {
         object OnOffToggle : ViewEvent
+        data class SwitchHomeMode(val screenMode: HomeChildScreen): ViewEvent
     }
 
     sealed interface ViewEffect : BaseViewEffect {
