@@ -46,6 +46,7 @@
     <string name="forgot_password">Forgot password?</string>
     <string name="login">Login</string>
     <string name="navigate_to_register">Don\'t have an account? Register</string>
+    <string name="click_again_to_quit">Click back again to quit</string>
 
 
     // Forgot Password Screen

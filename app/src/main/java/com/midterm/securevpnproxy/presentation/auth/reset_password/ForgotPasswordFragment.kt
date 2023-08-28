@@ -90,7 +90,7 @@ class ForgotPasswordFragment :
                 onClick = onSendClicked,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical =        24.dp)
+                    .padding(vertical = 24.dp)
             )
             Text(
                 text = stringResource(id = R.string.forgot_password_navigate_to_login),
