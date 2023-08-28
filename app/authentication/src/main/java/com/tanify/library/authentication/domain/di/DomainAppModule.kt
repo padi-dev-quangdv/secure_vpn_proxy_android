@@ -8,6 +8,8 @@ import com.tanify.library.authentication.domain.usecase.login.LoginUseCase
 import com.tanify.library.authentication.domain.usecase.login.LoginUseCaseImpl
 import com.tanify.library.authentication.domain.usecase.register.RegisterUseCase
 import com.tanify.library.authentication.domain.usecase.register.RegisterUseCaseImpl
+import com.tanify.library.authentication.domain.usecase.reset_password.ResetPasswordUseCase
+import com.tanify.library.authentication.domain.usecase.reset_password.ResetPasswordUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -29,6 +31,10 @@ abstract class DomainAppModule {
     @Binds
     @ViewModelScoped
     abstract fun bindGetUserInfoUseCase(impl: GetUserInfoUseCaseImpl): GetUserInfoUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindResetPasswordUseCase(impl: ResetPasswordUseCaseImpl): ResetPasswordUseCase
 
 //    @Binds
 //    @ViewModelScoped
