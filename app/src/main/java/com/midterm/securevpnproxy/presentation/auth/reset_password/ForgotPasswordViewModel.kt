@@ -32,8 +32,10 @@ class ForgotPasswordViewModel @Inject constructor(
         val validateEmail = validateEmail(email)
         if (!validateEmail) return
         resetJob?.cancel()
+        onLoading(true)
         resetJob = resetPasswordUseCase.execute(ResetPasswordParam(email))
             .onEach {
+                onLoading(false)
                 when(it) {
                     is ResultModel.Success -> {
                         setEffect(ViewEffect.SendSuccess)

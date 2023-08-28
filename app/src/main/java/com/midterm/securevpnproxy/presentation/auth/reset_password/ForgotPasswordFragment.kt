@@ -1,5 +1,6 @@
 package com.midterm.securevpnproxy.presentation.auth.reset_password
 
+import android.view.View
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -40,6 +41,12 @@ class ForgotPasswordFragment :
 
     override val provideEffectFlow: Flow<ForgotPasswordViewModel.ViewEffect>
         get() = viewModel.effect
+
+    override val loadingView: View
+        get() = binding.loading
+
+    override val loadingState: Flow<Boolean>
+        get() = viewModel.loadingState
 
     @Composable
     override fun MainComposeViewContent(modifier: Modifier) {
