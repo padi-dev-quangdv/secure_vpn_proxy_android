@@ -1,9 +1,6 @@
 package com.midterm.securevpnproxy.presentation.auth.on_boarding
 
 
-import android.content.Context
-import android.content.SharedPreferences
-import androidx.fragment.app.Fragment
 import com.midterm.securevpnproxy.R
 import com.midterm.securevpnproxy.base.BaseViewEffect
 import com.midterm.securevpnproxy.base.BaseViewEvent
@@ -11,6 +8,10 @@ import com.midterm.securevpnproxy.base.BaseViewModel
 import com.midterm.securevpnproxy.base.BaseViewState
 import com.tanify.library.localdb.tanify.UserDataStore
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,24 +21,23 @@ class OnBoardingViewModel @Inject constructor(
     ViewState()
 ) {
 
-    private var sharedPreferences: SharedPreferences? = null
+    private var checkFirstTimeOpenAppJob: Job? = null
 
-    fun savePrefData(fragment: Fragment) {
-        sharedPreferences = fragment.activity?.applicationContext?.getSharedPreferences(
-            "pref",
-            Context.MODE_PRIVATE
-        )
-        val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
-        editor.putBoolean("isFirstTimeRun", true)
-        editor.apply()
+    init {
+        isFirstTimeOpenApp()
     }
 
-    fun restorePrefData(fragment: Fragment): Boolean {
-        sharedPreferences = fragment.activity?.applicationContext?.getSharedPreferences(
-            "pref",
-            Context.MODE_PRIVATE
-        )
-        return sharedPreferences!!.getBoolean("isFirstTimeRun", false)
+    private fun setFirstTimeOpenApp() {
+        coroutineScope.launch {
+            userDataStore.setFirstTimeOpenApp(false)
+        }
+    }
+
+    private fun isFirstTimeOpenApp() {
+        checkFirstTimeOpenAppJob?.cancel()
+        checkFirstTimeOpenAppJob = userDataStore.isFirstTimeOpenApp().onEach {
+            setState(currentState.copy(isFirstTimeOpenApp = it))
+        }.launchIn(coroutineScope)
     }
 
     override fun onEvent(event: ViewEvent) {
@@ -45,7 +45,7 @@ class OnBoardingViewModel @Inject constructor(
             is ViewEvent.MoveToFirstPage -> moveToFirstPage()
             is ViewEvent.MoveToSecondPage -> moveToSecondPage()
             is ViewEvent.MoveToThirdPage -> moveToThirdPage()
-            is ViewEvent.ClickButtonStarted -> {}
+            is ViewEvent.ClickButtonStarted -> setFirstTimeOpenApp()
         }
     }
 
@@ -81,6 +81,7 @@ class OnBoardingViewModel @Inject constructor(
         val titleRes: Int = R.string.title_on_boarding_1,
         val descRes: Int = R.string.description_on_boarding_1,
         val buttonText: Int = R.string.btn_continue_text,
+        val isFirstTimeOpenApp: Boolean = true,
     ): BaseViewState
 
     sealed interface ViewEvent: BaseViewEvent {

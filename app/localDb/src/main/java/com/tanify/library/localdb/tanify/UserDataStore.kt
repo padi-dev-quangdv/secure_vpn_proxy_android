@@ -11,4 +11,8 @@ interface UserDataStore {
     fun isVpnTurnedOn(): Flow<Boolean>
 
     suspend fun saveVpnTurned(isOn: Boolean)
+
+    fun isFirstTimeOpenApp(): Flow<Boolean>
+
+    suspend fun setFirstTimeOpenApp(value: Boolean)
 }

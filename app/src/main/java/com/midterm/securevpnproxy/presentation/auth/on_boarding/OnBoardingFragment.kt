@@ -47,6 +47,10 @@ class OnBoardingFragment :
     @Composable
     override fun MainComposeViewContent(modifier: Modifier) {
         val viewState by viewModel.state.collectAsStateWithLifecycle(initialValue = OnBoardingViewModel.ViewState())
+        if(!viewState.isFirstTimeOpenApp) {
+            gotoLogin()
+            return
+        }
         val pagerState = rememberPagerState()
         val coroutineScope  = rememberCoroutineScope()
         LaunchedEffect(pagerState) {
@@ -73,7 +77,7 @@ class OnBoardingFragment :
                 modifier = Modifier
                     .padding(8.dp)
                     .clickable {
-                        gotoLogin()
+                        viewModel.onEvent(OnBoardingViewModel.ViewEvent.ClickButtonStarted)
                     }
             )
             Spacer(modifier = Modifier.weight(1f))
@@ -110,7 +114,7 @@ class OnBoardingFragment :
                             }
                         }
                         2 -> {
-                            gotoLogin()
+                            viewModel.onEvent(OnBoardingViewModel.ViewEvent.ClickButtonStarted)
                         }
                     }
                 },
@@ -130,6 +134,7 @@ class OnBoardingFragment :
         val action = OnBoardingFragmentDirections.actionOnboardingFragmentToLoginFragment()
         findNavController().navigate(action)
     }
+
 
     override fun initView() {
 
