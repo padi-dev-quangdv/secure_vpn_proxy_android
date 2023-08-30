@@ -91,30 +91,30 @@ class OnBoardingFragment :
             )
             Spacer(modifier = Modifier.height(24.dp))
             HorizontalPager(
-                pageCount = 3,
+                pageCount = OnBoardingPages.entries.size,
                 state = pagerState,
                 modifier = Modifier.weight(7f)
             ) {
                 OnBoardingPagerContent(
-                    imageRes = viewState.imageRes,
-                    titleRes = viewState.titleRes,
-                    descRes = viewState.descRes,
+                    imageRes = viewState.currentPage.imageRes,
+                    titleRes = viewState.currentPage.titleRes,
+                    descRes = viewState.currentPage.descRes,
                 )
             }
             DotIndicator(currentPage = pagerState.currentPage)
             Spacer(modifier = Modifier.weight(2f))
             LargeSolidButton(
-                text = stringResource(id = viewState.buttonText),
+                text = stringResource(id = viewState.currentPage.buttonText),
                 color = ButtonColors.buttonColorBlue(),
                 onClick = {
                     when (pagerState.currentPage) {
-                        0,1 -> {
+                        OnBoardingPages.entries.lastIndex -> {
+                            viewModel.onEvent(OnBoardingViewModel.ViewEvent.ClickButtonStarted)
+                        }
+                        else -> {
                             coroutineScope.launch {
                                 pagerState.scrollToPage(pagerState.currentPage + 1)
                             }
-                        }
-                        2 -> {
-                            viewModel.onEvent(OnBoardingViewModel.ViewEvent.ClickButtonStarted)
                         }
                     }
                 },

@@ -37,8 +37,11 @@ fun DotIndicator(
 }
 
 @Composable
-fun Dot(
+private fun Dot(
     isSelected: Boolean = false,
+    color: Color =
+        if (isSelected) LocalColors.current.infoMain
+        else LocalColors.current.infoSurface,
 ) {
     Box(
         contentAlignment = Alignment.Center,
@@ -46,8 +49,6 @@ fun Dot(
             .size(24.dp)
             .padding(8.dp)
     ) {
-        val color =
-            if (isSelected) LocalColors.current.infoMain else LocalColors.current.infoSurface
         Spacer(
             modifier = Modifier
                 .size(8.dp)
