@@ -44,7 +44,7 @@ class HomeFragment :
 
                 },
                 onEndItemClicked = {
-
+                    goToProfile()
                 },
                 iconStart = R.drawable.ic_menu,
                 iconEnd = R.drawable.ic_person,

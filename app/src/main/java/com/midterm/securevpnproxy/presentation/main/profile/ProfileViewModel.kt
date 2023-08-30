@@ -1,20 +1,18 @@
 package com.midterm.securevpnproxy.presentation.main.profile
 
-import androidx.lifecycle.ViewModel
 import com.midterm.securevpnproxy.base.BaseViewEffect
 import com.midterm.securevpnproxy.base.BaseViewEvent
 import com.midterm.securevpnproxy.base.BaseViewModel
 import com.midterm.securevpnproxy.base.BaseViewState
 import com.midterm.securevpnproxy.presentation.ui_model.UiUserDataModel
-import com.tanify.library.authentication.domain.model.user_info.UserDataModel
 import com.tanify.library.authentication.domain.usecase.get_user_info.GetUserInfoUseCase
 import com.tanify.library.libcore.usecase.ResultModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
+import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
@@ -46,7 +44,7 @@ class ProfileViewModel @Inject constructor(
         userInfoJob?.cancel()
     }
 
-    override fun onEvent(viewEvent: ViewEvent) {
+    override fun onEvent(event: ViewEvent) {
 
     }
 
