@@ -1,17 +1,30 @@
 package com.midterm.securevpnproxy.presentation.main.white_list
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.midterm.securevpnproxy.R
+import com.midterm.securevpnproxy.base.BaseViewEffect
+import com.midterm.securevpnproxy.base.BaseViewEvent
+import com.midterm.securevpnproxy.base.BaseViewModel
+import com.midterm.securevpnproxy.base.BaseViewState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class WhiteListViewModel : ViewModel() {
+@HiltViewModel
+class WhiteListViewModel @Inject constructor() : BaseViewModel<WhiteListViewModel.ViewState, WhiteListViewModel.ViewEvent, WhiteListViewModel.ViewEffect>
+    (ViewState()) {
 
-    val whiteAppList = MutableLiveData<List<WhiteListAppData>>()
+    class ViewState : BaseViewState {
 
-    init {
-        whiteAppList.value = listOf(
-            WhiteListAppData(imageTitle = R.drawable.ic_facebook, content = "Facebook" ),
-            WhiteListAppData(imageTitle = R.drawable.ic_facebook, content = "Twitter")
-        )
     }
+
+    interface ViewEvent : BaseViewEvent {
+
+    }
+
+    interface ViewEffect : BaseViewEffect {
+
+    }
+
+    override fun onEvent(event: ViewEvent) {
+
+    }
+
 }

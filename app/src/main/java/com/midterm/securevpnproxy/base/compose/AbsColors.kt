@@ -45,3 +45,5 @@ val InfoBorder  = Color(0xFFB0C9EF)
 val InfoHover   = Color(0xFF0F4EAD)
 val InfoPressed     = Color(0xFF092F68)
 val InfoFocus   = Color(0xFF135ED0)
+
+val ColorF8F8F8 = Color(0xFFF8F8F8)
