@@ -40,6 +40,7 @@ dependencies {
 
     // Dagger Hilt
     implementation deps.hilt.android
+    implementation project(path: ':app:libcore')
     kapt deps.hilt.compiler
 
     //Datastore - SharedPreference replacement

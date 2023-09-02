@@ -1,5 +1,6 @@
 package com.midterm.securevpnproxy.presentation.main.white_list
 
+import android.graphics.drawable.Drawable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,21 +11,35 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.drawable.toBitmap
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.midterm.securevpnproxy.R
 import com.midterm.securevpnproxy.base.BaseComposeFragment
 import com.midterm.securevpnproxy.base.compose.AppTheme
+import com.midterm.securevpnproxy.base.compose.LargeTextBold
 import com.midterm.securevpnproxy.base.compose.LargeTextMedium
 import com.midterm.securevpnproxy.base.compose.LocalColors
 import com.midterm.securevpnproxy.base.compose.MediumTextBold
@@ -39,6 +54,7 @@ class WhiteListAppsFragment :
 
     @Composable
     override fun MainComposeViewContent(modifier: Modifier) {
+        val viewState by viewModel.state.collectAsStateWithLifecycle(initialValue = WhiteListViewModel.ViewState())
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -75,13 +91,11 @@ class WhiteListAppsFragment :
             LazyColumn(
                 modifier = Modifier.padding(vertical = 24.dp)
             ) {
-                items(WhiteListAppData.entries) { app ->
+                items(viewState.currentAppPackageNames) {
                     WhiteListAppFeature(
-                        imageRes = app.imageTitle,
-                        contentTextRes = app.content,
-                        onSwitchButtonClicked = {
-                            app.isEnabled = it
-                        },
+                        drawable = it.appIcon ?: return@items,
+                        contentText = it.appName,
+                        onSwitchButtonClicked = {},
                     )
                 }
             }
