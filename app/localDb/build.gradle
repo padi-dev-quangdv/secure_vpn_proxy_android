@@ -40,11 +40,19 @@ dependencies {
 
     // Dagger Hilt
     implementation deps.hilt.android
+    implementation project(path: ':app:libcore')
     kapt deps.hilt.compiler
 
     //Datastore - SharedPreference replacement
     implementation deps.datastore.values()
     implementation deps.moshi.values()
+
+    // Room
+    implementation deps.room.ktx
+    implementation deps.room.runtime
+    kapt deps.room.compiler
+//    kapt "android.arch.persistence.room:compiler:1.1.1"
+
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
