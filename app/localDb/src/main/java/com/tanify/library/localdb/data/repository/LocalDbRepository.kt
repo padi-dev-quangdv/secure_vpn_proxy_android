@@ -4,18 +4,22 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.drawable.Drawable
 import android.os.Build
+import com.tanify.library.localdb.data.WhiteListAppDao
 import com.tanify.library.localdb.data.dto.WhiteListAppDto
 import com.tanify.library.localdb.data.dto.toModel
 import com.tanify.library.localdb.domain.datasource.LocalDbDataSource
+import com.tanify.library.localdb.data.entity.WhiteListAppDbModel
 import com.tanify.library.localdb.domain.model.WhiteListAppModel
+import com.tanify.library.localdb.domain.payload.WhiteListAppPayload
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class LocalDbRepository @Inject constructor(
-    private val context: Context
+    @ApplicationContext private val context: Context,
+    private val whiteListAppDao: WhiteListAppDao,
 ) : LocalDbDataSource{
     @SuppressLint("QueryPermissionsNeeded")
     override fun getAllAppDevice(): Flow<List<WhiteListAppModel>> {
@@ -50,4 +54,19 @@ class LocalDbRepository @Inject constructor(
             }
         }
     }
+
+    override fun getAppsFromDb(): Flow<List<WhiteListAppDbModel>> {
+        return whiteListAppDao.getWhiteListAppsFromDb()
+    }
+
+    override suspend fun insertAppToDb(whiteListAppPayload: WhiteListAppPayload) {
+        val dbModel = WhiteListAppDbModel(whiteListAppPayload.packageName, whiteListAppPayload.appName)
+        whiteListAppDao.insertAppToDb(dbModel)
+    }
+
+    override suspend fun deleteAppFromDb(whiteListAppPayload: WhiteListAppPayload) {
+        val dbModel = WhiteListAppDbModel(whiteListAppPayload.packageName, whiteListAppPayload.appName)
+        whiteListAppDao.deleteAppFromDb(dbModel)
+    }
+
 }

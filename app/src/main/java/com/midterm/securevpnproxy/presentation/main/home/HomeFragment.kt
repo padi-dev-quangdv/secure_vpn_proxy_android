@@ -44,7 +44,7 @@ class HomeFragment :
 
                 },
                 onEndItemClicked = {
-                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToWhiteListAppsFragment())
+
                 },
                 iconStart = R.drawable.ic_menu,
                 iconEnd = R.drawable.ic_person,

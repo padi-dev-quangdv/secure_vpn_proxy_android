@@ -47,6 +47,13 @@ dependencies {
     implementation deps.datastore.values()
     implementation deps.moshi.values()
 
+    // Room
+    implementation deps.room.ktx
+    implementation deps.room.runtime
+    kapt deps.room.compiler
+//    kapt "android.arch.persistence.room:compiler:1.1.1"
+
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'

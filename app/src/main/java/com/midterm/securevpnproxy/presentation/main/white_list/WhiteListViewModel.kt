@@ -6,7 +6,9 @@ import com.midterm.securevpnproxy.base.BaseViewModel
 import com.midterm.securevpnproxy.base.BaseViewState
 import com.tanify.library.libcore.usecase.ResultModel
 import com.tanify.library.localdb.domain.model.WhiteListAppModel
-import com.tanify.library.localdb.domain.usecase.GetInstallAppPackageUseCase
+import com.tanify.library.localdb.domain.usecase.crud_db.WhiteListAppParam
+import com.tanify.library.localdb.domain.usecase.crud_db.insert.InsertAppToDbUseCase
+import com.tanify.library.localdb.domain.usecase.get_app_device.GetInstallAppPackageUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
@@ -16,10 +18,12 @@ import javax.inject.Inject
 @HiltViewModel
 class WhiteListViewModel @Inject constructor(
     private val getInstallAppPackageUseCase: GetInstallAppPackageUseCase,
+    private val insertAppToDbUseCase: InsertAppToDbUseCase,
 ) : BaseViewModel<WhiteListViewModel.ViewState, WhiteListViewModel.ViewEvent, WhiteListViewModel.ViewEffect>
     (ViewState()) {
 
     private var getAllPackageNamesJob: Job? = null
+    private var insertAppToDbUseCaseJob: Job? = null
 
     init {
         getAllPackageNames()
@@ -27,7 +31,7 @@ class WhiteListViewModel @Inject constructor(
 
     private fun getAllPackageNames() {
         getAllPackageNamesJob?.cancel()
-        getAllPackageNamesJob = getInstallAppPackageUseCase.execute(String())
+        getAllPackageNamesJob = getInstallAppPackageUseCase.execute(Any())
             .onEach {
                 if(it is ResultModel.Success) {
                     setState(
@@ -35,6 +39,16 @@ class WhiteListViewModel @Inject constructor(
                             currentAppPackageNames = it.result
                         )
                     )
+                }
+            }.launchIn(coroutineScope)
+    }
+
+    private fun addAppToLocalDb(appPackage: String, appName: String) {
+        insertAppToDbUseCaseJob?.cancel()
+        insertAppToDbUseCaseJob = insertAppToDbUseCase.execute(WhiteListAppParam(appPackage,appName))
+            .onEach {
+                if(it is ResultModel.Success) {
+                    //todo: save into db success
                 }
             }.launchIn(coroutineScope)
     }
