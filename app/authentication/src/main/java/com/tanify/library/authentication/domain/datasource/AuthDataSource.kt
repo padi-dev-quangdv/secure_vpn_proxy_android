@@ -20,4 +20,6 @@ interface AuthDataSource {
     fun getUserInfo(): Flow<ResultModel<UserDataModel>>
 
     fun subscribeUserInfo()
+
+    fun logout(): Flow<ResultModel<Boolean>>
 }

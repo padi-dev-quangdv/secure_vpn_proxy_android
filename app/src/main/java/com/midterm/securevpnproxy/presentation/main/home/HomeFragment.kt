@@ -44,26 +44,30 @@ class HomeFragment :
 
                 },
                 onEndItemClicked = {
-
+                    goToProfile()
                 },
                 iconStart = R.drawable.ic_menu,
                 iconEnd = R.drawable.ic_person,
             )
-            HomeContent(viewState.currentScreen)
+            HomeContent(viewState.currentScreen, viewModel)
         }
     }
 
     @Composable
-    private fun HomeContent(currentScreen: HomeChildScreen) {
+    private fun HomeContent(currentScreen: HomeChildScreen, viewModel: HomeViewModel) {
         when (currentScreen) {
             HomeChildScreen.Main -> HomeMainScreen(
                 onChangeProfileClicked = {
-
+                    viewModel.onEvent(HomeViewModel.ViewEvent.SwitchHomeMode(HomeChildScreen.SelectMode))
                 },
                 onSwitchVpnState = { turnVpn(it) }
             )
 
-            HomeChildScreen.SelectMode -> HomeSelectModeScreen()
+            HomeChildScreen.SelectMode -> HomeSelectModeScreen(
+                onBackClicked = {
+                    viewModel.onEvent(HomeViewModel.ViewEvent.SwitchHomeMode(HomeChildScreen.Main))
+                }
+            )
         }
     }
 

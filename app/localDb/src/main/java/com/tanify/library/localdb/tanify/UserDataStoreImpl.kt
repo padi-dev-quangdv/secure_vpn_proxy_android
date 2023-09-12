@@ -29,9 +29,20 @@ class UserDataStoreImpl @Inject constructor(
         dataStore.save(VPN_TURN_ON_STATE, isOn)
     }
 
+    override fun isFirstTimeOpenApp(): Flow<Boolean> {
+        return dataStore.getBooleanFlow(IS_FIRST_TIME_OPEN_APP).map {
+            it ?: true
+        }
+    }
+
+    override suspend fun setFirstTimeOpenApp(value: Boolean) {
+        dataStore.save(IS_FIRST_TIME_OPEN_APP, value)
+    }
+
     companion object {
         private const val SELECTED_GROUP_TYPE_KEY = "selected_group_type"
         private const val VPN_TURN_ON_STATE = "vpn_turn_on_state"
         private const val DEFAULT_GROUP_TYPE = "standard"
+        private const val IS_FIRST_TIME_OPEN_APP = "is_first_time_open_app"
     }
 }

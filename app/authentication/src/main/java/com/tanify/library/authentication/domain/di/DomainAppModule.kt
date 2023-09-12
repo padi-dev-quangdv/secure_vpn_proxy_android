@@ -6,8 +6,12 @@ import com.tanify.library.authentication.domain.usecase.get_user_info.GetUserInf
 import com.tanify.library.authentication.domain.usecase.get_user_info.GetUserInfoUseCaseImpl
 import com.tanify.library.authentication.domain.usecase.login.LoginUseCase
 import com.tanify.library.authentication.domain.usecase.login.LoginUseCaseImpl
+import com.tanify.library.authentication.domain.usecase.logout.LogoutUseCase
+import com.tanify.library.authentication.domain.usecase.logout.LogoutUseCaseImpl
 import com.tanify.library.authentication.domain.usecase.register.RegisterUseCase
 import com.tanify.library.authentication.domain.usecase.register.RegisterUseCaseImpl
+import com.tanify.library.authentication.domain.usecase.reset_password.ResetPasswordUseCase
+import com.tanify.library.authentication.domain.usecase.reset_password.ResetPasswordUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -30,6 +34,10 @@ abstract class DomainAppModule {
     @ViewModelScoped
     abstract fun bindGetUserInfoUseCase(impl: GetUserInfoUseCaseImpl): GetUserInfoUseCase
 
+    @Binds
+    @ViewModelScoped
+    abstract fun bindResetPasswordUseCase(impl: ResetPasswordUseCaseImpl): ResetPasswordUseCase
+
 //    @Binds
 //    @ViewModelScoped
 //    abstract fun bindSubscribeUserInfoUseCase(impl: SubscribeUserInfoUseCaseImpl): SubscribeUserInfoUseCase
@@ -37,4 +45,8 @@ abstract class DomainAppModule {
     @Binds
     @ViewModelScoped
     abstract fun bindAuthStateUseCase(impl: AuthStateUseCaseImpl): AuthStateUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindLogoutUseCase(impl: LogoutUseCaseImpl): LogoutUseCase
 }
