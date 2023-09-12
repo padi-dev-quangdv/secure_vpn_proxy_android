@@ -1,6 +1,5 @@
 package com.midterm.securevpnproxy.presentation.main.home.ui
 
-import android.icu.text.CaseMap.Title
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

@@ -45,6 +45,7 @@ data class AppColorsPalette(
     val infoHover: Color = Color.Unspecified,
     val infoPressed: Color = Color.Unspecified,
     val infoFocus: Color = Color.Unspecified,
+    val colorF9F9F9 : Color = Color.Unspecified,
 )
 
 val LocalColors = staticCompositionLocalOf { AppColorsPalette() }
@@ -158,6 +159,7 @@ val AppLightColorsPalette = AppColorsPalette(
     infoHover = InfoHover,
     infoPressed = InfoPressed,
     infoFocus = InfoFocus,
+    colorF9F9F9 = ColorF9F9F9
 )
 
 //val DarkColorPalette = darkColors(

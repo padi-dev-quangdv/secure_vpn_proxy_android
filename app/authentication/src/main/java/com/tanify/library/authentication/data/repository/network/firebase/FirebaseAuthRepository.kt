@@ -113,4 +113,19 @@ class FirebaseAuthRepository @Inject constructor(
                 }
             }
     }
+
+    override fun logout(): Flow<ResultModel<Boolean>> {
+        return flow {
+            val result = try {
+                auth.signOut()
+                ResultModel.Success(true)
+            } catch (t: Throwable) {
+                t.printStackTrace()
+                ResultModel.Error(t)
+            }
+            emit(result)
+        }
+    }
+
+
 }
