@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.fragment.findNavController
 import com.midterm.securevpnproxy.R
 import com.midterm.securevpnproxy.base.BaseComposeFragment
 import com.midterm.securevpnproxy.base.compose.AppTheme
@@ -28,6 +29,7 @@ import com.midterm.securevpnproxy.base.compose.LargeTextMedium
 import com.midterm.securevpnproxy.base.compose.LocalColors
 import com.midterm.securevpnproxy.base.compose.MediumTextBold
 import com.midterm.securevpnproxy.databinding.LayoutComposeOnlyBinding
+import com.midterm.securevpnproxy.presentation.main.ui.MainHeaderUi
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,24 +44,29 @@ class WhiteListAppsFragment :
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .padding(horizontal = 24.dp)
         ) {
+            MainHeaderUi(
+                titleText = stringResource(id = R.string.whitelist_apps),
+                onBackClicked = {
+                    navigateBack()
+                })
             Text(
                 text = stringResource(id = R.string.description_whitelist_apps),
                 style = MediumTextBold,
                 color = LocalColors.current.neutral90,
                 maxLines = 2,
                 modifier = Modifier
-                    .padding(vertical = 24.dp)
+                    .padding(vertical = 24.dp, horizontal = 24.dp)
             )
             Row(
                 modifier = Modifier
+                    .padding(horizontal = 24.dp)
                     .fillMaxWidth()
                     .background(
                         color = LocalColors.current.colorF8F8F8,
                         shape = RoundedCornerShape(8.dp)
                     )
-                    .padding(16.dp)
+                    .padding(vertical = 16.dp)
             ) {
                 Text(
                     text = stringResource(id = R.string.search_app),
@@ -73,7 +80,7 @@ class WhiteListAppsFragment :
                 )
             }
             LazyColumn(
-                modifier = Modifier.padding(vertical = 24.dp)
+                modifier = Modifier.padding(24.dp)
             ) {
                 items(viewState.currentAppPackageNames) {
                     WhiteListAppFeature(
@@ -93,6 +100,10 @@ class WhiteListAppsFragment :
         AppTheme {
             MainComposeViewContent(modifier = Modifier)
         }
+    }
+
+    private fun navigateBack() {
+        findNavController().navigateUp()
     }
 
     override fun initData() {
