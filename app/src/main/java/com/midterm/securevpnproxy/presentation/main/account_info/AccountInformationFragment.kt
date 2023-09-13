@@ -1,24 +1,65 @@
 package com.midterm.securevpnproxy.presentation.main.account_info
 
-import android.view.View
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.fragment.findNavController
 import com.midterm.securevpnproxy.R
-import com.midterm.securevpnproxy.base.BaseFragment
-import com.midterm.securevpnproxy.databinding.FragmentAccountInformationBinding
-import com.midterm.securevpnproxy.presentation.auth.login.LoginFragment
+import com.midterm.securevpnproxy.base.BaseComposeFragment
+import com.midterm.securevpnproxy.base.compose.AppTheme
+import com.midterm.securevpnproxy.base.compose.ButtonColors
+import com.midterm.securevpnproxy.base.compose.customview.LargeOutlinedButton
+import com.midterm.securevpnproxy.databinding.LayoutComposeOnlyBinding
+import com.midterm.securevpnproxy.presentation.main.ui.MainHeaderUi
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AccountInformationFragment :
-    BaseFragment<FragmentAccountInformationBinding, AccountInformationViewModel>(layoutId = R.layout.fragment_account_information) {
+    BaseComposeFragment<LayoutComposeOnlyBinding, AccountInformationViewModel>(layoutId2 = R.layout.layout_compose_only) {
+    override fun getMainComposeView(): ComposeView = binding.composeView
 
-    override fun initData() {
+    @Composable
+    override fun MainComposeViewContent(modifier: Modifier) {
+        Column(modifier = modifier.fillMaxSize()) {
+            MainHeaderUi(
+                titleText = getString(R.string.title_account_information),
+                onBackClicked = {
+                    navigateBack()
+                })
+            AccountFields(
+                manageAccountFeatureOnClick = {
+                    //  navigate to manage account
+                })
+            LargeOutlinedButton(
+                text = stringResource(id = R.string.logout),
+                outlinedColor = ButtonColors.outlinedButtonColorBlue(),
+                onClick = {
+                    backToLogin()
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp)
+            )
+        }
     }
 
-    private fun gotoProfile() {
-        val action =
-            AccountInformationFragmentDirections.actionAccountInformationFragmentToProfileFragment()
-        findNavController().navigate(action)
+    @Composable
+    @Preview(showBackground = true)
+    fun PreviewAccountInformationFragment() {
+        AppTheme {
+            MainComposeViewContent(modifier = Modifier.fillMaxWidth())
+        }
+    }
+
+    private fun navigateBack() {
+        findNavController().navigateUp()
     }
 
     private fun backToLogin() {
@@ -26,23 +67,11 @@ class AccountInformationFragment :
         activity?.finish()
     }
 
-    override fun initViewListener() {
-        binding.layoutHeader.iconLeft.setOnClickListener(this)
-        binding.btnLogout.setOnClickListener(this)
-    }
+    override fun initData() {
 
-    override fun onViewClicked(v: View) {
-        super.onViewClicked(v)
-        when (v.id) {
-            binding.layoutHeader.iconLeft.id -> gotoProfile()
-            binding.btnLogout.id -> backToLogin()
-        }
-    }
-
-    override fun initObserver() {
     }
 
     override fun initView() {
-    }
 
+    }
 }
