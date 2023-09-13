@@ -1,37 +1,44 @@
 package com.midterm.securevpnproxy.presentation.main.premium
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
 import com.midterm.securevpnproxy.R
-import com.midterm.securevpnproxy.base.BaseFragment
-import com.midterm.securevpnproxy.databinding.FragmentPremiumBinding
+import com.midterm.securevpnproxy.base.BaseComposeFragment
+import com.midterm.securevpnproxy.databinding.LayoutComposeOnlyBinding
+import com.midterm.securevpnproxy.presentation.main.premium.ui.BillSelectionLayout
+import com.midterm.securevpnproxy.presentation.main.premium.ui.PremiumContent
+import com.midterm.securevpnproxy.presentation.main.premium.ui.PremiumHeader
 
 class PremiumFragment :
-    BaseFragment<FragmentPremiumBinding, PremiumViewModel>(layoutId = R.layout.fragment_premium) {
+    BaseComposeFragment<LayoutComposeOnlyBinding, PremiumViewModel>(layoutId2 = R.layout.layout_compose_only) {
+    override fun getMainComposeView(): ComposeView = binding.composeView
 
-    override fun initData() {
-    }
-
-    override fun initViewListener() {
-        binding.apply {
-            sbPremiumOptions.setOnCheckedChangeListener { compoundButton, boolean ->
-                if (boolean) {
-                    tvPremium.text = resources.getString(R.string.annually_premium)
-                    tvPrice.text = resources.getString(R.string.annually_price)
-                    tvExtensionTime.text = resources.getString(R.string.year)
-                } else {
-                    tvPremium.text = resources.getString(R.string.monthly_premium)
-                    tvPrice.text = resources.getString(R.string.monthly_price)
-                    tvExtensionTime.text = resources.getString(R.string.month)
-                }
+    @Composable
+    override fun MainComposeViewContent(modifier: Modifier) {
+        LazyColumn(
+            verticalArrangement = Arrangement.SpaceEvenly,
+            modifier = modifier.fillMaxSize()) {
+            item {
+                PremiumHeader()
+            }
+            item {
+                BillSelectionLayout(onSwitchSelection = {
+                    //todo: Switch selection
+                })
+            }
+            item {
+                PremiumContent()
             }
         }
     }
 
-    override fun initObserver() {
-
+    override fun initData() {
     }
 
     override fun initView() {
-
     }
-
 }

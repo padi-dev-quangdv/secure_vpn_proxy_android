@@ -20,8 +20,8 @@
     <string name="description_premium">Subscribe to get these all great features:</string>
     <string name="description_bill">Unlimited access</string>
 
-    <string name="billed_monthly">Billed Monthly</string>
-    <string name="billed_annually">Billed Annually</string>
+    <string name="billed_monthly">Billed \nMonthly</string>
+    <string name="billed_annually">Billed \nAnnually</string>
     <string name="start_free_trial">Start Free Trial</string>
     <string name="monthly_premium">Monthly Premium</string>
     <string name="annually_premium">Annually Premium</string>
@@ -29,6 +29,7 @@
     <string name="annually_price">$9,99</string>
     <string name="month">/month</string>
     <string name="year">/year</string>
+    <string name="unlimited_access">Unlimited access</string>
 
     <string name="regional_servers_feature">Regional servers</string>
     <string name="unlock_feature">Unlock all premium features</string>

@@ -20,6 +20,7 @@ import com.midterm.securevpnproxy.base.compose.LargeTextMedium
 import com.midterm.securevpnproxy.base.compose.LocalColors
 import com.midterm.securevpnproxy.presentation.main.home.home_main.HomeMainViewModel.*
 import com.midterm.securevpnproxy.presentation.main.home.home_main.ui.CurrentModeUi
+import com.midterm.securevpnproxy.presentation.main.home.home_main.ui.PremiumBannerUi
 import com.midterm.securevpnproxy.presentation.main.home.home_main.ui.VpnProtectUi
 import com.midterm.securevpnproxy.presentation.main.home.home_main.ui.VpnToggleState
 import com.midterm.securevpnproxy.presentation.main.home.home_main.ui.VpnToggleUi
@@ -27,6 +28,7 @@ import com.midterm.securevpnproxy.presentation.main.home.home_main.ui.VpnToggleU
 @Composable
 fun HomeMainScreen(
     onChangeProfileClicked: () -> Unit,
+    actionGoPremiumClicked: () -> Unit,
     onSwitchVpnState: (status: VpnToggleState) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeMainViewModel = viewModel(),
@@ -67,6 +69,7 @@ fun HomeMainScreen(
             modifier = Modifier.padding(top = 16.dp)
         )
         Spacer(modifier = Modifier.weight(1f))
+        PremiumBannerUi(actionOnClick = actionGoPremiumClicked)
     }
 }
 

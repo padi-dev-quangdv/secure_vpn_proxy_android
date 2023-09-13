@@ -45,6 +45,7 @@ data class AppColorsPalette(
     val infoHover: Color = Color.Unspecified,
     val infoPressed: Color = Color.Unspecified,
     val infoFocus: Color = Color.Unspecified,
+    val colorF5F5F5: Color = Color.Unspecified,
     val colorF8F8F8: Color = Color.Unspecified,
     val colorF9F9F9: Color = Color.Unspecified,
 )
@@ -160,6 +161,7 @@ val AppLightColorsPalette = AppColorsPalette(
     infoHover = InfoHover,
     infoPressed = InfoPressed,
     infoFocus = InfoFocus,
+    colorF5F5F5 = ColorF5F5F5,
     colorF8F8F8 = ColorF8F8F8,
     colorF9F9F9 = ColorF9F9F9,
 )

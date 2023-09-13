@@ -60,7 +60,12 @@ class HomeFragment :
                 onChangeProfileClicked = {
                     viewModel.onEvent(HomeViewModel.ViewEvent.SwitchHomeMode(HomeChildScreen.SelectMode))
                 },
-                onSwitchVpnState = { turnVpn(it) }
+                onSwitchVpnState = {
+                    turnVpn(it)
+                },
+                actionGoPremiumClicked = {
+                    goToPremium()
+                }
             )
 
             HomeChildScreen.SelectMode -> HomeSelectModeScreen(
