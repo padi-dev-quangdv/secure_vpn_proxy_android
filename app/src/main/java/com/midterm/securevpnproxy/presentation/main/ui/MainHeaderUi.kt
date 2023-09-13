@@ -1,16 +1,12 @@
 package com.midterm.securevpnproxy.presentation.main.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.midterm.securevpnproxy.R
 import com.midterm.securevpnproxy.base.compose.LargeTextSemiBold
@@ -29,8 +25,6 @@ fun MainHeaderUi(
     ) {
         ImageButton(
             drawableRes = R.drawable.ic_back,
-            modifier = Modifier
-                .padding(16.dp)
         ) {
             onBackClicked()
         }
