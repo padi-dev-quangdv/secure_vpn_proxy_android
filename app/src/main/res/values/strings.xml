@@ -149,6 +149,6 @@
 
     <string name="custom_block_list_hint">Eg. tumblr, facebook…</string>
     <string name="custom_black_list_keyword">Keyword</string>
-    <string name="custom_block_list">custom_block_list</string>
+    <string name="custom_block_list">Custom blocklist</string>
     <string name="remove">Remove</string>
 </resources>
