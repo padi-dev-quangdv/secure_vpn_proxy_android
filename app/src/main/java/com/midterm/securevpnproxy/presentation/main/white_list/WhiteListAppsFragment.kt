@@ -1,5 +1,6 @@
 package com.midterm.securevpnproxy.presentation.main.white_list
 
+import android.view.View
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -29,12 +30,19 @@ import com.midterm.securevpnproxy.base.compose.MediumTextBold
 import com.midterm.securevpnproxy.databinding.LayoutComposeOnlyBinding
 import com.midterm.securevpnproxy.presentation.main.ui.MainHeaderUi
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.Flow
 
 @AndroidEntryPoint
 class WhiteListAppsFragment :
     BaseComposeFragment<LayoutComposeOnlyBinding, WhiteListViewModel>(layoutId2 = R.layout.layout_compose_only) {
 
     override fun getMainComposeView(): ComposeView = binding.composeView
+
+    override val loadingView: View
+        get() = binding.loading
+
+    override val loadingState: Flow<Boolean>
+        get() = viewModel.loadingState
 
     @Composable
     override fun MainComposeViewContent(modifier: Modifier) {

@@ -38,8 +38,10 @@ class WhiteListViewModel @Inject constructor(
 
     private fun getAllPackageNames() {
         getAllPackageNamesJob?.cancel()
+        onLoading(true)
         getAllPackageNamesJob = getInstallAppPackageUseCase.execute(Any())
             .onEach {
+                onLoading(false)
                 if (it is ResultModel.Success) {
                     setState(
                         currentState.copy(
