@@ -1,4 +1,4 @@
-package com.midterm.securevpnproxy.presentation.main.profile
+package com.midterm.securevpnproxy.presentation.main.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -24,7 +24,7 @@ import com.midterm.securevpnproxy.base.compose.LocalColors
 import com.midterm.securevpnproxy.base.compose.SmallTextRegular
 
 @Composable
-fun UserFeature(
+fun TanifyFeature(
     contentText: String,
     onFeatureClicked: () -> Unit,
     modifier: Modifier = Modifier,
@@ -34,14 +34,14 @@ fun UserFeature(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxWidth()
+            .clickable {
+                onFeatureClicked()
+            }
             .padding(vertical = 5.dp, horizontal = 24.dp)
             .background(
                 color = LocalColors.current.colorF9F9F9,
                 shape = RoundedCornerShape(8.dp)
             )
-            .clickable {
-                onFeatureClicked()
-            }
     ) {
         Text(
             text = contentText,
@@ -69,9 +69,9 @@ fun UserFeature(
 
 @Composable
 @Preview(showBackground = true)
-fun PreviewUserFeature() {
+fun PreviewTanifyFeature() {
     AppTheme {
-        UserFeature(
+        TanifyFeature(
             contentText = "Account",
             onFeatureClicked = {},
             canShowOption = false
