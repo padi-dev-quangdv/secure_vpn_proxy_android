@@ -1,23 +1,23 @@
 package com.midterm.securevpnproxy.presentation.main.home
 
-import androidx.lifecycle.MutableLiveData
 import com.midterm.securevpnproxy.base.BaseViewEffect
 import com.midterm.securevpnproxy.base.BaseViewEvent
 import com.midterm.securevpnproxy.base.BaseViewModel
 import com.midterm.securevpnproxy.base.BaseViewState
-import com.midterm.securevpnproxy.presentation.main.home.HomeViewModel.*
+import com.midterm.securevpnproxy.presentation.main.home.HomeViewModel.ViewEffect
+import com.midterm.securevpnproxy.presentation.main.home.HomeViewModel.ViewEvent
+import com.midterm.securevpnproxy.presentation.main.home.HomeViewModel.ViewState
 import com.midterm.securevpnproxy.presentation.main.home.model.HomeChildScreen
 import com.midterm.securevpnproxy.vpn_state.DnsVpnManager
 import com.midterm.securevpnproxy.vpn_state.DnsVpnRunningState
 import com.tanify.library.dns.domain.model.server_list.ServerGroupType
 import com.tanify.library.localdb.tanify.UserDataStore
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(

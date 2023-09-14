@@ -31,6 +31,7 @@ fun ListFeatureSettings(
     customBlockListClick: () -> Unit,
     whiteListAppClick: () -> Unit,
     modifier: Modifier = Modifier,
+    whiteListAppSize: Int = 0,
 ) {
     Column(
         modifier = modifier
@@ -54,7 +55,7 @@ fun ListFeatureSettings(
         )
         SettingFeature(
             text = stringResource(id = R.string.whitelist_apps),
-            subText = stringResource(id = R.string.whitelist_apps_status),
+            subText = stringResource(id = R.string.whitelist_apps_status, whiteListAppSize),
             isUserPremium = false,
             onItemClick = whiteListAppClick
         )
