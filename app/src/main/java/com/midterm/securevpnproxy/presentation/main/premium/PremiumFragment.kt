@@ -41,8 +41,6 @@ class PremiumFragment :
                 modifier = modifier.fillMaxWidth()
             ) {
                 item {
-                }
-                item {
                     PremiumHeader()
                 }
                 item {

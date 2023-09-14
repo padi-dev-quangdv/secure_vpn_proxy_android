@@ -96,12 +96,6 @@ class HomeFragment :
         findNavController().navigate(action)
     }
 
-    private fun goToFilter() {
-        val action =
-            HomeFragmentDirections.actionHomeFragmentToSeverListFragment()
-        findNavController().navigate(action)
-    }
-
     private fun goToPremium() {
         val action = HomeFragmentDirections.actionHomeFragmentToPremiumFragment()
         findNavController().navigate(action)

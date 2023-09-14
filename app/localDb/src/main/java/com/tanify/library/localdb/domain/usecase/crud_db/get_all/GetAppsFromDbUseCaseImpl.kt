@@ -5,8 +5,9 @@ import com.tanify.library.localdb.domain.datasource.LocalDbDataSource
 import com.tanify.library.localdb.data.entity.WhiteListAppDbModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class GetAppsFromDbUseCaseImpl(
+class GetAppsFromDbUseCaseImpl @Inject constructor(
     private val localDbDataSource: LocalDbDataSource,
 ) : GetAppsFromDbUseCase {
     override fun execute(param: Any): Flow<ResultModel<List<WhiteListAppDbModel>>> {
