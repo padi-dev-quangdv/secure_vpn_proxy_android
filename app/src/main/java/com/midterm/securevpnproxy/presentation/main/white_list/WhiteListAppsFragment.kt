@@ -1,5 +1,6 @@
 package com.midterm.securevpnproxy.presentation.main.white_list
 
+import android.view.View
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -18,19 +19,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import com.midterm.securevpnproxy.R
 import com.midterm.securevpnproxy.base.BaseComposeFragment
-import com.midterm.securevpnproxy.base.compose.AppTheme
 import com.midterm.securevpnproxy.base.compose.LargeTextMedium
 import com.midterm.securevpnproxy.base.compose.LocalColors
 import com.midterm.securevpnproxy.base.compose.MediumTextBold
 import com.midterm.securevpnproxy.databinding.LayoutComposeOnlyBinding
 import com.midterm.securevpnproxy.presentation.main.ui.MainHeaderUi
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.Flow
 
 @AndroidEntryPoint
 class WhiteListAppsFragment :
@@ -38,9 +38,19 @@ class WhiteListAppsFragment :
 
     override fun getMainComposeView(): ComposeView = binding.composeView
 
+    override val loadingView: View
+        get() = binding.loading
+
+    override val loadingState: Flow<Boolean>
+        get() = viewModel.loadingState
+
     @Composable
     override fun MainComposeViewContent(modifier: Modifier) {
         val viewState by viewModel.state.collectAsStateWithLifecycle(initialValue = WhiteListViewModel.ViewState())
+        val enabledApps = viewState.enabledApps.map {
+            it.packageName
+        }
+
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -82,23 +92,22 @@ class WhiteListAppsFragment :
             LazyColumn(
                 modifier = Modifier.padding(24.dp)
             ) {
-                items(viewState.currentAppPackageNames) {
+                items(viewState.currentAppPackageNames) { whiteListApp ->
                     WhiteListAppFeature(
-                        drawable = it.appIcon ?: return@items,
-                        contentText = it.appName,
-                        onSwitchButtonClicked = {},
+                        drawable = whiteListApp.appIcon ?: return@items,
+                        contentText = whiteListApp.appName,
+                        isEnabled = enabledApps.contains(whiteListApp.packageName),
+                        onSwitchButtonClicked = {
+                            if(it) {
+                                viewModel.onEvent(WhiteListViewModel.ViewEvent.AddAppToDb(whiteListApp.packageName, whiteListApp.appName))
+                            } else {
+                                viewModel.onEvent(WhiteListViewModel.ViewEvent.DeleteAppFromDb(whiteListApp.packageName, whiteListApp.appName))
+                            }
+                        },
                     )
                 }
             }
 
-        }
-    }
-
-    @Composable
-    @Preview(showBackground = true)
-    fun PreviewWhiteListAppsFragment() {
-        AppTheme {
-            MainComposeViewContent(modifier = Modifier)
         }
     }
 
