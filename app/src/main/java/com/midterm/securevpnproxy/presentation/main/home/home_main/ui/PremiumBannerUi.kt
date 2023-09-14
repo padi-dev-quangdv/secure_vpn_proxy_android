@@ -42,13 +42,13 @@ fun PremiumBannerUi(
                 color = backgroundColor,
                 shape = RoundedCornerShape(size = 8.dp)
             )
+            .clickable {
+                actionOnClick()
+            }
             .padding(
                 horizontal = 16.dp,
                 vertical = 14.dp
             )
-            .clickable {
-                actionOnClick()
-            }
     ) {
         Image(
             painter = painterResource(id = R.drawable.ic_crown),

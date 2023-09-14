@@ -31,6 +31,8 @@ import com.midterm.securevpnproxy.base.compose.customview.LargeSolidButton
 fun PremiumContent(
     modifier: Modifier = Modifier,
     title: String = stringResource(id = R.string.monthly_premium),
+    price: String = stringResource(id = R.string.monthly_price),
+    subscriptionType: String = stringResource(id = R.string.month),
     titleColor: Color = LocalColors.current.infoMain,
     descColor: Color = LocalColors.current.neutral70,
     backgroundColor: Color = LocalColors.current.colorF5F5F5,
@@ -61,7 +63,10 @@ fun PremiumContent(
             color = descColor
         )
         Spacer(modifier = Modifier.height(16.dp))
-        PremiumPackagePrice()
+        PremiumPackagePrice(
+            price = price,
+            subscriptionType = subscriptionType
+        )
         Spacer(modifier = Modifier.height(32.dp))
         LargeSolidButton(
             text = stringResource(id = R.string.start_free_trial),
@@ -108,7 +113,7 @@ private fun PremiumPackagePrice(
 private fun ListPremiumFeature(
     modifier: Modifier = Modifier
 ) {
-    Column (
+    Column(
         modifier = modifier
     ) {
         PremiumFeature(
