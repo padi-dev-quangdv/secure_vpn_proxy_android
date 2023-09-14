@@ -31,7 +31,7 @@ import kotlinx.coroutines.flow.Flow
 @AndroidEntryPoint
 class ProfileFragment :
     BaseComposeFragment<LayoutComposeOnlyBinding, ProfileViewModel>(layoutId2 = R.layout.layout_compose_only),
-HandleEffect<ProfileViewModel.ViewEffect>{
+    HandleEffect<ProfileViewModel.ViewEffect> {
 
     override fun initData() {
     }
@@ -42,7 +42,7 @@ HandleEffect<ProfileViewModel.ViewEffect>{
         get() = viewModel.effect
 
     override fun onEffectTriggered(effect: ProfileViewModel.ViewEffect?) {
-        when(effect) {
+        when (effect) {
             is ProfileViewModel.ViewEffect.Error -> {
                 Toast.makeText(
                     requireContext(),
@@ -50,10 +50,12 @@ HandleEffect<ProfileViewModel.ViewEffect>{
                     Toast.LENGTH_LONG
                 ).show()
             }
+
             is ProfileViewModel.ViewEffect.SignOutSuccess -> {
-                startActivity(Intent(context,StartActivity::class.java))
+                startActivity(Intent(context, StartActivity::class.java))
                 activity?.finish()
             }
+
             else -> {
 
             }
