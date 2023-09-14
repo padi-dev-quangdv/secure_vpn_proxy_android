@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/regular_margin"
-                android:text="@string/about_quark_vpn"
+                android:text="@string/about_app"
                 android:textAppearance="@style/TextViewLargeText"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -21,7 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.midterm.securevpnproxy.R
-import com.midterm.securevpnproxy.base.PremiumFeature
+import com.midterm.securevpnproxy.presentation.main.ui.PremiumFeature
 import com.midterm.securevpnproxy.base.compose.AppTheme
 import com.midterm.securevpnproxy.base.compose.LargeTextBold
 import com.midterm.securevpnproxy.base.compose.LocalColors

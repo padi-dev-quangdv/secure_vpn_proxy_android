@@ -23,6 +23,7 @@ import com.midterm.securevpnproxy.base.compose.HandleEffect
 import com.midterm.securevpnproxy.databinding.LayoutComposeOnlyBinding
 import com.midterm.securevpnproxy.presentation.StartActivity
 import com.midterm.securevpnproxy.presentation.main.ui.MainHeaderUi
+import com.midterm.securevpnproxy.presentation.main.ui.TanifyFeature
 import com.midterm.securevpnproxy.presentation.ui_model.UiUserStatus
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
@@ -90,25 +91,25 @@ HandleEffect<ProfileViewModel.ViewEffect>{
                     .fillMaxWidth()
             ) {
                 item {
-                    UserFeature(
+                    TanifyFeature(
                         contentText = stringResource(id = R.string.account),
                         onFeatureClicked = { gotoAccountScreen() }
                     )
                 }
                 item {
-                    UserFeature(
+                    TanifyFeature(
                         contentText = stringResource(id = R.string.settings),
                         onFeatureClicked = { gotoSettingsScreen() }
                     )
                 }
                 item {
-                    UserFeature(
+                    TanifyFeature(
                         contentText = stringResource(id = R.string.support),
                         onFeatureClicked = { gotoSupportScreen() }
                     )
                 }
                 item {
-                    UserFeature(
+                    TanifyFeature(
                         contentText = stringResource(id = R.string.about),
                         onFeatureClicked = { gotoAboutScreen() }
                     )

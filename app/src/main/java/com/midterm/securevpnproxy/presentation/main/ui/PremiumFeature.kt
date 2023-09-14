@@ -1,4 +1,4 @@
-package com.midterm.securevpnproxy.base
+package com.midterm.securevpnproxy.presentation.main.ui
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
