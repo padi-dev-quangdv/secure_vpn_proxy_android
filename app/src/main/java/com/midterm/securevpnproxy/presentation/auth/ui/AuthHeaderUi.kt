@@ -1,9 +1,7 @@
 package com.midterm.securevpnproxy.presentation.auth.ui
 
-import android.graphics.drawable.shapes.OvalShape
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

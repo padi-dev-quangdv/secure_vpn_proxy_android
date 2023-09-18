@@ -127,17 +127,17 @@ class LoginViewModel @Inject constructor(
     ) : BaseViewState
 
     sealed interface ViewEvent : BaseViewEvent {
-        object CheckLogin : ViewEvent
+        data object CheckLogin : ViewEvent
         data class UpdateEmail(val email: String) : ViewEvent
         data class UpdatePassword(val password: String) : ViewEvent
-        object TogglePasswordVisibility : ViewEvent
-        object Submit : ViewEvent
+        data object TogglePasswordVisibility : ViewEvent
+        data object Submit : ViewEvent
     }
 
     sealed interface ViewEffect : BaseViewEffect {
         data class Error(val message: String) : ViewEffect
 
-        object LoginSuccess : ViewEffect
+        data object LoginSuccess : ViewEffect
     }
 
 }

@@ -21,6 +21,7 @@ import com.midterm.securevpnproxy.base.compose.LocalColors
 import com.midterm.securevpnproxy.base.compose.MediumTextBold
 import com.midterm.securevpnproxy.databinding.LayoutComposeOnlyBinding
 import com.midterm.securevpnproxy.presentation.main.ui.MainHeaderUi
+import com.tanify.library.localdb.domain.model.WhiteListAppModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
 
@@ -60,11 +61,23 @@ class WhiteListAppsFragment :
                 modifier = Modifier
                     .padding(vertical = 24.dp, horizontal = 24.dp)
             )
-            WhiteListAppSearch()
+            WhiteListAppSearch(
+                searchText = viewState.searchViewText,
+                onTextChanged = {
+                    viewModel.onEvent(WhiteListViewModel.ViewEvent.ChangeTextSearchView(it))
+                }
+            )
             LazyColumn(
                 modifier = Modifier.padding(24.dp)
             ) {
-                items(viewState.currentAppPackageNames) { whiteListApp ->
+                val filterItems: List<WhiteListAppModel>
+                val searchedText: String = viewState.searchViewText
+                filterItems = if(searchedText.isEmpty()) {
+                    viewState.allAppPackageNames
+                } else {
+                    viewState.currentPackageNames
+                }
+                items(filterItems) { whiteListApp ->
                     WhiteListAppFeature(
                         drawable = whiteListApp.appIcon ?: return@items,
                         contentText = whiteListApp.appName,
