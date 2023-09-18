@@ -103,7 +103,7 @@
     <string name="apps_lock_status">10 apps</string>
     <string name="custom_block_list_status">9 domains</string>
     <string name="whitelist_apps">Whitelist apps</string>
-    <string name="whitelist_apps_status">10 apps</string>
+    <string name="whitelist_apps_status">%d apps</string>
     <string name="custom_blocklist">Custom blocklist</string>
 
     // Whitelist Apps Screen

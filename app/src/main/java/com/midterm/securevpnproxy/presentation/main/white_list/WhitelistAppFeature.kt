@@ -47,7 +47,9 @@ fun WhiteListAppFeature(
             text = contentText,
             style = LargeTextMedium,
             color = LocalColors.current.neutral90,
-            modifier = Modifier.padding(horizontal = 8.dp)
+            modifier = Modifier
+                .padding(horizontal = 8.dp)
+                .weight(3f)
         )
         Spacer(modifier = Modifier.weight(1f))
         TanifySwitch(

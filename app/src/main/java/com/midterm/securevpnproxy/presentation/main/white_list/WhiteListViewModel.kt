@@ -15,6 +15,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,6 +31,7 @@ class WhiteListViewModel @Inject constructor(
     private var insertAppToDbUseCaseJob: Job? = null
     private var deleteAppFromDbUseCaseJob: Job? = null
     private var getAllEnabledAppsJob: Job? = null
+    private var allWhiteListApp: List<WhiteListAppModel> = mutableListOf()
 
     init {
         getAllPackageNames()
@@ -45,11 +47,14 @@ class WhiteListViewModel @Inject constructor(
                 if (it is ResultModel.Success) {
                     setState(
                         currentState.copy(
-                            currentAppPackageNames = it.result.sortedBy { model ->
+                            allAppPackageNames = it.result.sortedBy { model ->
                                 model.appName
                             }
                         )
                     )
+                    allWhiteListApp = it.result.sortedBy { model ->
+                        model.appName
+                    }
                 }
             }.launchIn(coroutineScope)
     }
@@ -88,9 +93,25 @@ class WhiteListViewModel @Inject constructor(
             }.launchIn(coroutineScope)
     }
 
+    private fun changeTextSearchView(newValue: String) {
+        coroutineScope.launch {
+            setState(currentState.copy(searchViewText = newValue))
+            if(newValue.isEmpty()) {
+                return@launch
+            }
+            val searchedList = allWhiteListApp.filter { item ->
+                item.appName.contains(newValue, ignoreCase = true)
+            }
+            setState(currentState.copy(currentPackageNames = searchedList))
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
         getAllPackageNamesJob?.cancel()
+        insertAppToDbUseCaseJob?.cancel()
+        deleteAppFromDbUseCaseJob?.cancel()
+        getAllEnabledAppsJob?.cancel()
     }
 
     override fun onEvent(event: ViewEvent) {
@@ -98,14 +119,17 @@ class WhiteListViewModel @Inject constructor(
             is ViewEvent.AddAppToDb -> addAppToLocalDb(event.packageName, event.appName)
             is ViewEvent.DeleteAppFromDb -> deleteAppToLocalDb(event.deletePackageName, event.deleteAppName)
             is ViewEvent.GetAllEnabledApps -> getAllEnabledApps()
+            is ViewEvent.ChangeTextSearchView -> changeTextSearchView(event.searchText)
         }
     }
 
     data class ViewState(
-        val currentAppPackageNames: List<WhiteListAppModel> = mutableListOf(),
+        val allAppPackageNames: List<WhiteListAppModel> = mutableListOf(),
         val enabledApps: List<WhiteListAppModel> = mutableListOf(),
         val insertError: String? = null,
         val deleteError: String? = null,
+        val searchViewText: String = "",
+        val currentPackageNames: List<WhiteListAppModel> = mutableListOf(),
     ) : BaseViewState
 
     sealed interface ViewEvent : BaseViewEvent {
@@ -113,7 +137,8 @@ class WhiteListViewModel @Inject constructor(
         data class DeleteAppFromDb(val deletePackageName: String, val deleteAppName: String) :
             ViewEvent
 
-        object GetAllEnabledApps : ViewEvent
+        data object GetAllEnabledApps : ViewEvent
+        data class ChangeTextSearchView(val searchText: String): ViewEvent
     }
 
     interface ViewEffect : BaseViewEffect {
